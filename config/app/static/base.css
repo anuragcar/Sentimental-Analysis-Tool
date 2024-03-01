@@ -1,0 +1,33 @@
+/* Custom styles for the navbar */
+
+.navbar {
+    background-color: #007ffe; /* Change background color as needed */
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem; /* Adjust font size as needed */
+    font-weight: bold; /* Adjust font weight as needed */
+  }
+  
+  .navbar-nav .nav-link {
+    color: #333; /* Change text color as needed */
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: #007bff; /* Change text color on hover as needed */
+  }
+  
+  .navbar-toggler-icon {
+    color: #333; /* Change navbar toggler icon color as needed */
+  }
+  
+  .navbar-toggler {
+    border-color: #333; /* Change navbar toggler border color as needed */
+  }
+  
+  .navbar-toggler:focus,
+  .navbar-toggler:active {
+    outline: none; /* Remove outline on focus or active state */
+    border-color: #333; /* Change navbar toggler border color on focus or active state as needed */
+  }
+  
