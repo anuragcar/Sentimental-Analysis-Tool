@@ -3,17 +3,23 @@ The project aims to develop a sophisticated Sentiment Analysis and opinion-minin
 
 ## Setup
 
-Install all dependencies: 
+### Install all dependencies: 
 ```
 pip install -r requirements.txt
 ```
 
-To execute (Windows): 
+### To execute
+Make sure you are in the config folder to run manage.py:
+```
+cd config
+```
+
+Run Server (Windows): 
 ```
 python manage.py runserver
 ```
 
-To execute (Mac/Linux): 
+Run Server (Mac/Linux): 
 ```
 python3 manage.py runserver
 ```
