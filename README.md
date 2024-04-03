@@ -10,10 +10,10 @@ pip install -r requirements.txt
 
 To execute (Windows): 
 ```
-python main.py
+python manage.py runserver
 ```
 
 To execute (Mac/Linux): 
 ```
-python3 main.py
+python3 manage.py runserver
 ```
