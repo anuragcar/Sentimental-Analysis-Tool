@@ -17,6 +17,7 @@ def register_view(response):
 	return render(response, "register/register.html", {"form":form})
 
 def logout_view(request):
-    logout(request)
-    messages.success(request, ("You Have Been Logged Out!"))
-    return redirect('home')
+    if request.method == 'POST':
+        logout(request)
+        messages.success(request, ("You Have Been Logged Out!"))
+        return redirect('home:home')
