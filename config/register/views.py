@@ -2,6 +2,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
+from django.contrib import messages
 
 # Create your views here.
 def register(response):
@@ -14,3 +15,8 @@ def register(response):
 		form = RegisterForm()
 		
 	return render(response, "register/register.html", {"form":form})
+
+def logout(request):
+    logout(request)
+    messages.success(request, ("You Have Been Logged Out!"))
+    return redirect('home')
