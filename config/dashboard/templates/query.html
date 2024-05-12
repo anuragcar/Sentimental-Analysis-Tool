@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentiment Analysis</title>
+</head>
+<body>
+    <h1>Sentiment Analysis</h1>
+    <form id="sentimentForm">
+        <label for="textInput">Enter Text:</label><br>
+        <textarea id="textInput" name="textInput" rows="4" cols="50"></textarea><br><br>
+        <button type="submit">Analyze Sentiment</button>
+    </form>
+
+    <script>
+        document.getElementById("sentimentForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            var textInput = document.getElementById("textInput").value;
+
+            // Randomly choose sentiment
+            var sentiments = ["positive", "neutral", "negative"];
+            var randomSentiment = sentiments[Math.floor(Math.random() * sentiments.length)];
+
+            // Prepare data to send to Django backend
+            var data = {
+                "text": textInput,
+                "sentiment": randomSentiment
+            };
+
+            // Send data to Django backend using fetch
+            fetch("/analyze_sentiment/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                alert("Sentiment analysis complete! Sentiment: " + data.sentiment);
+            })
+            .catch(error => {
+                console.error("There was a problem with your fetch operation:", error);
+            });
+        });
+    </script>
+</body>
+</html>

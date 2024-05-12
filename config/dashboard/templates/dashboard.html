@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis Dashboard</title>
+    <link rel="stylesheet" href="/static/dashboard.css?{% now "U" %}">
+</head>
+<body>
+    <div class="container">
+        <div class="filterSection">
+            <label class="bold-label">Category</label>
+        </div>
+        <div class="radio-options">
+            <label><input type="radio" name="category" value="all" checked>All</label>
+            <label><input type="radio" name="category" value="positive">Positive</label>
+            <label><input type="radio" name="category" value="neutral">Neutral</label>
+            <label><input type="radio" name="category" value="negative">Negative</label>
+        </div>
+        <p>Your favorite color is: {{ favorite_color }}</p>
+
+        
+        <div class="data">
+            <h2>Data</h2>
+            <div class="data-placeholder">
+                <div id="sentimentTiles" class="sentiment-tiles"></div>
+            </div>
+        </div>
+        <div class="sentiment">
+            <h2>Sentiment</h2>
+            <div class="donut-chart-container">
+                <canvas id="donutChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/dashboard.js"></script>
+</body>
+</html>
