@@ -35,3 +35,7 @@ def analyze_sentiment(request):
         return JsonResponse(response_data)
     else:
         return JsonResponse({"error": "Method not allowed"}, status=405)
+    
+def get_sentiment_data(request):
+    data = SentimentData.objects.all().values('text', 'sentiment')
+    return JsonResponse(list(data), safe=False) 

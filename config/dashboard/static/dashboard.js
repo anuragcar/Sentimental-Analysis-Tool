@@ -1,18 +1,24 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const categoryRadios = document.querySelectorAll('input[name="category"]');
     const sentimentTiles = document.getElementById("sentimentTiles");
     const donutChart = document.getElementById("donutChart").getContext("2d");
 
-    // Sample data
-    const data = [
-        { text: "Sample text 1", sentiment: "positive" },
-        { text: "Sample text 1.1", sentiment: "positive" },
-        { text: "Sample text 2", sentiment: "neutral" },
-        { text: "Sample text 3", sentiment: "negative" },
-    ];
+    // Function to fetch data from the API
+    async function fetchData(url) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error("Network response was not ok.");
+            }
+            return await response.json();
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            return []; // Return an empty array if there's an error
+        }
+    }
 
     // Function to render sentiment tiles based on selected category
-    function renderSentimentTiles(category) {
+    function renderSentimentTiles(category, data) {
         sentimentTiles.innerHTML = "";
         data.forEach(item => {
             if (category === "all" || item.sentiment === category) {
@@ -24,11 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Initial render
-    renderSentimentTiles("all");
-
     // Function to calculate sentiment percentages
-    function calculateSentimentPercentages() {
+    function calculateSentimentPercentages(data) {
         const sentimentCounts = { positive: 0, neutral: 0, negative: 0 };
         data.forEach(item => {
             sentimentCounts[item.sentiment]++;
@@ -42,8 +45,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Function to update donut chart
-    function updateDonutChart() {
-        const sentimentPercentages = calculateSentimentPercentages();
+    function updateDonutChart(data) {
+        const sentimentPercentages = calculateSentimentPercentages(data);
         const donutChartInstance = new Chart(donutChart, {
             type: "doughnut",
             data: {
@@ -60,15 +63,28 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Initial update of donut chart
-    updateDonutChart();
+    // Initial fetch and update
+    fetchData("/get_sentiment_data/")
+        .then(data => {
+            renderSentimentTiles("all", data);
+            updateDonutChart(data);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
 
     // Event listener for category change
     categoryRadios.forEach(radio => {
-        radio.addEventListener("change", function() {
+        radio.addEventListener("change", function () {
             const selectedCategory = this.value;
-            renderSentimentTiles(selectedCategory);
-            updateDonutChart();
+            fetchData("/get_sentiment_data/")
+                .then(data => {
+                    renderSentimentTiles(selectedCategory, data);
+                    updateDonutChart(data);
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
         });
     });
 });
